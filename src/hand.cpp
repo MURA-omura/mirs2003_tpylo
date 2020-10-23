@@ -1,19 +1,16 @@
-#include "hand.h"
+#include "hand.hpp"
 
 
-Hand::Hand()
-{
-
-}
-
-
-bool Hand::isExistHand()
-{
+Hand::Hand(){
 
 }
 
 
-int Hand::getSensor()
-{
+bool Hand::isExistHand(){
+
+}
+
+
+int Hand::getSensor(){
 
 }

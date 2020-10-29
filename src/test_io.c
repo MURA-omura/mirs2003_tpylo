@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "io.h"
+#include "io.hpp"
 
 int main(){
 	int sw_f, sw_l, sw_r;

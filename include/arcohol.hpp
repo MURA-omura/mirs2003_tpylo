@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef __ARCOHOL__
+#define __ARCOHOL__
 
 class Arcohol()
 {
@@ -10,3 +10,5 @@ public:
 
 private:
 };
+
+#endif

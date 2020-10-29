@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef __SPRAY__
+#define __SPRAY__
 
 class Spray()
 {
@@ -10,3 +10,5 @@ public:
 
 private:
 };
+
+#endif

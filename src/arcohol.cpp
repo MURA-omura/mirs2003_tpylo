@@ -1,5 +1,5 @@
 #include "arcohol.hpp"
-#include "io.c"
+
 
 Arcohol::Arcohol(){
 

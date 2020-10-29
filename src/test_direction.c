@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "arduino.h"
 #include "direction.h"
-#include "uss.h"
+#include "uss.hpp"
 
 int main(){
 	int dist;

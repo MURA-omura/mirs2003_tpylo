@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "uss.h"
+#include "uss.hpp"
 
 int main(){
 	long uss_l, uss_r;

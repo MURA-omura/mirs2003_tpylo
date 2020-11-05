@@ -1,7 +1,7 @@
 #include "hand.hpp"
 
 
-Hand::Hand(): pyro(-1)
+Hand::Hand(): pyro(pyro_pin)
 {
 
 }

@@ -2,7 +2,7 @@
  * @file hand.hpp
  * @brief 手検出モジュール
  * @author 村尾
- * @date 2020/11/28
+ * @date 2020/10/28
  */
 
 #ifndef __HAND__
@@ -12,10 +12,9 @@
 
 /**
  * @brief 手検出クラス
- * @details 焦電センサからの値をIOクラスから読み取り、LOW(負論理)が出力されたときにtrueを返す
+ * @details 焦電センサからの値をIOクラスから読み取り、high(正論理)が出力されたときにtrueを返す
  */
-class Hand()
-{
+class Hand(){
 public:
     /**
      * @brief Ioクラスに焦電センサのピン番号を渡す
@@ -29,7 +28,7 @@ public:
 
 private:
     //! 焦電センサのピン番号
-    static const int pyro_pin = -1;
+    static const int pyro_pin = 10;
     //! 焦電センサから値を読み取るインスタンス
     Io pyro;
 };

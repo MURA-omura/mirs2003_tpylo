@@ -5,6 +5,18 @@
  * @date 2020/11/11
  */
 
+
+#include "move.hpp"
+
+
+Move::Move():
+uss_array{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
+{
+
+}
+
+
+/*
 #include <stdio.h>
 #include <unistd.h>
 #include "arduino.h"
@@ -39,3 +51,4 @@ int main(){
 		}
 
 }
+*/

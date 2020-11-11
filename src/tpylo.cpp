@@ -1,3 +1,10 @@
+/**
+ * @file tpylo.cpp
+ * @brief 全体プログラム
+ * @author 岡部
+ * @date 2020/11/11
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 #include "arduino.h"

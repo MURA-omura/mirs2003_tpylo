@@ -1,6 +1,6 @@
 /**
  * @file uss.hpp
- * @brief 超音波センサモジュールv
+ * @brief 超音波センサモジュール
  * @author 岡部
  * @date 2020/11/11
  */

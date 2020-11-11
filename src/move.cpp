@@ -1,3 +1,10 @@
+/**
+ * @file move.cpp
+ * @brief èµ°è¡Œãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
+ * @author å²¡éƒ¨
+ * @date 2020/11/11
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 #include "arduino.h"
@@ -16,11 +23,11 @@ int main(){
 	if(uss_open_r() != 0) return -1;
 
 	while(1){
-		//„‰ñ
+		//å·¡å›
 		request_set_runmode(STR,25,100);
-		//áŠQ•¨‚ğŒŸ’m‚µ‚½Œã‰ñ“]‚·‚é
-		dist_l = uss_l;
-		dist_r = uss_r;
+		//éšœå®³ç‰©ã‚’æ¤œçŸ¥ã—ãŸå¾Œå›è»¢ã™ã‚‹
+		dist_l = uss;
+		dist_r = uss;
 
 		if(dist_l < 30 ; dist_r < 30){
 			request_set_runmode(STP, 0, 0);

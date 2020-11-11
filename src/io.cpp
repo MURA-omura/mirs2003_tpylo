@@ -1,3 +1,10 @@
+/**
+ * @file io.cpp
+ * @brief ピン番号のプログラム
+ * @author 岡部
+ * @date 2020/11/11
+ */
+
 #include <stdio.h>
 #include <wiringPi.h>
 #include "io.hpp"

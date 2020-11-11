@@ -1,3 +1,10 @@
+/**
+ * @file ucc.cpp
+ * @brief 距離検出プログラム
+ * @author 岡部
+ * @date 2020/11/11
+ */
+
 #include "uss.hpp"
 #include <stdio.h>
 #include <unistd.h>

@@ -1,3 +1,10 @@
+/**
+ * @file hand.cpp
+ * @brief 手検出モジュール
+ * @author 岡部
+ * @date 2020/11/11
+ */
+
 #include "hand.hpp"
 
 

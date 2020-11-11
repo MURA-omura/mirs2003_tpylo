@@ -13,6 +13,7 @@
 class Move(){
 public:
 /**
+ * @brief Ioクラスにモータのピン番号を渡す
 */
     Move();
 

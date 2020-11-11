@@ -2,22 +2,27 @@
 DIR_SRC  := ./src
 DIR_HEAD := ./include
 DIR_OBJ  := ./build
+DIR_IMG  := ./img
 
 # 生成するプログラム
 PRGS :=
 PRGS += test_io test_uss test_request test_direction
-PRGS += test_position
-PRGS += tpylo
+PRGS += test_capture test_number test_dir_num
+PRGS += test_server test_position
+PRGS += pilot
 
 # オブジェクト
 OBJS_RUN := $(addprefix $(DIR_OBJ)/, io.o uss.o arduino.o request.o direction.o)
+OBJS_CAP := $(addprefix $(DIR_OBJ)/, get_img.o)
+OBJS_NUM := $(addprefix $(DIR_OBJ)/, number_search.o number_detect.o)
+OBJS_SVR := $(addprefix $(DIR_OBJ)/, server.o)
 OBJS_POS := $(addprefix $(DIR_OBJ)/, position.o)
 
 # コンパイルオプション
 CC      := g++
 G++      := g++
-CFLAGS  := -O2 -Wall -MMD -MP
-LDFLAGS := -lm -lpthread -lwiringPi
+CFLAGS  := -O2 -Wall -MMD -MP `pkg-config --cflags opencv`
+LDFLAGS := -lm -lpthread -lwiringPi `pkg-config --libs opencv`
 INCLUDE := -I $(DIR_HEAD)
 
 # 全コンパイル・ファイル削除用ターゲット

@@ -12,21 +12,19 @@
  * @brief 噴射クラス
  * @details hand.cからの値を読み取り、モータを回す。
  */
-class Spray()
-{
+class Spray{
 public:
-
     Spray();
     /**
-     * @brief モータを回すか判断する関数
-     * @return trueならモータを回してスプレーを噴射
+     * @brief モータを回す関数
      */
-    bool isActionSpray();
-    int getSensor();
+    void pushBottle();
 
 private:
     //!モータを回す角度[dec]
     static const int spray_morter = 360;
+    //! ギア比
+    static const float gear_rate;
 };
 
 #endif

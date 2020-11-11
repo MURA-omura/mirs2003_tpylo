@@ -9,12 +9,22 @@
 
 
 Hand::Hand(): pyro(pyro_pin){
-
+    std::fill(pyro_array.begin(), pyro_array.end(), false);
 }
 
 
 bool Hand::isExistHand(){
-    int sensor = pyro.getSw();
-    return sensor == 1;
+    // 配列の値を1つずつずらす
+    for(int i = 1; i < pyro_array.size(); i++){
+        pyro_array[i] = pyro_array[i-1];
+    }
+    pyro_array[0] = pyro.getSw() == 1;
 
+    // 配列のtrueの数を数える
+    int flag_counter = 0;
+    for(bool pr : pyro_array){
+        if(pr) flag_counter++;
+    }
+
+    return flag_counter == array_size;
 }

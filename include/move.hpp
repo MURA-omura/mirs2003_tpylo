@@ -4,17 +4,17 @@
  * @author 岡部
  * @date 2020/11/05
  */
- 
+
 #ifndef __MOVE__
 #define __MOVE__
 /**
  * @brief 走行クラス
  */
-class Move(){
+class Move{
 public:
-/**
- * @brief Ioクラスにモータのピン番号を渡す
-*/
+    /**
+     * @brief Ioクラスにモータのピン番号を渡す
+    */
     Move();
 
 private:

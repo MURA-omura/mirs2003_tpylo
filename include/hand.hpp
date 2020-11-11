@@ -8,18 +8,20 @@
 #ifndef __HAND__
 #define __HAND__
 
+#include <array>
 #include "io.hpp"
 
 /**
  * @brief 手検出クラス
  * @details 焦電センサからの値をIOクラスから読み取り、high(正論理)が出力されたときにtrueを返す
  */
-class Hand(){
+class Hand{
 public:
     /**
      * @brief Ioクラスに焦電センサのピン番号を渡す
      */
     Hand();
+
     /**
      * @brief 手がかざされているかを検出する関数
      * @return bool 手がかざされていたらtrue
@@ -31,6 +33,11 @@ private:
     static const int pyro_pin = 10;
     //! 焦電センサから値を読み取るインスタンス
     Io pyro;
+
+    //! 配列のサイズ
+    static const int array_size = 10;
+    //! 焦電センサの値を格納する配列
+    std::array<bool, array_size> pyro_array;
 };
 
 #endif

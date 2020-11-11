@@ -8,18 +8,31 @@
 #ifndef __STRAW__
 #define __STRAW__
 
+#include "hand.hpp"
+#include "spray.hpp"
+
 /**
  * @brief モータ動作クラス
  * @details hand.cppの値を読み取り、trueが返ってきたときにモータを動作する
  */
-class Straw(){
+class Straw{
 public:
     /**
      * @brief Ioクラスにモータのピン番号を渡す
      */
     Straw();
 
+    /**
+     * @brief ストロー機構を動作させる
+     */
+    void update();
+
 private:
+    // モータを作動させる最小カウント数
+    static const int actuate_count = 120;
+    int count = 0;
+    Hand hand;
+    Spray spray;
 };
 
 #endif

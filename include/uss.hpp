@@ -12,7 +12,7 @@
  * @brief 距離検出クラス
  * @details 超音波センサからの値を読み取り、距離を計算する
  */
-class Uss(){
+class Uss{
 public:
     /**
      * @brief Ioクラスに超音波センサのピン番号を渡す

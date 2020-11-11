@@ -8,11 +8,13 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "arduino.h"
-#include "io.h"
 #include "request.h"
-#include "uss.h"
 
+#include "arcohol.hpp"
+#include "move.hpp"
+#include "straw.hpp"
 
+/*
 int main(){
 	double volt;
 	
@@ -31,5 +33,13 @@ int main(){
 	}
 	
 	arduino_close();
+	return 0;
+}
+*/
+
+int main(){
+	while(true){
+		// 処理を記述
+	}
 	return 0;
 }

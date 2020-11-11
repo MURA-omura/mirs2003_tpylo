@@ -12,8 +12,7 @@
  * @brief アルコール残量検出クラス
  * @details センサからの値を読み取り、0になったら
  */
-class Arcohol()
-{
+class Arcohol{
 public:
     /**
      * @brief クラスにセンサのピン番号を渡す

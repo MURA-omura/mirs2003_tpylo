@@ -12,3 +12,11 @@ Straw::Straw(){
 
 }
 
+void Straw::update(){
+    count++;
+    bool pylo = hand.isExistHand();
+    if(pylo && count > actuate_count){
+        count = 0;
+        spray.pushBottle();
+    }
+}

@@ -31,7 +31,7 @@ typedef enum{
     TURNING,
     CURVE,
     STOP,
-    MOVE_NUM
+    RUN_NUM
 } run_t;
 
 /**

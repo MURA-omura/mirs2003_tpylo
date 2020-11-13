@@ -26,61 +26,43 @@ typedef enum{
 	USS_NUM
 } uss_t;
 
+typedef enum{
+    STRAIGHT,
+    TURNING,
+    CURVE,
+    STOP,
+    MOVE_NUM
+} run_t;
+
 /**
  * @brief 走行クラス
  */
 class Move{
 public:
     Move();
-    /**
-     * @brief 直進状態の関数(通常状態)
-     * @details 直進する関数をmove.cppに渡す
-     */
-     Move(int straight);
-
-    /**
-     * @brief 障害物回避の関数
-     * @details 90度回転する関数をmove.cppに渡す
-     */
-    Move(int turn_quarter);
-
-    /**
-     * @brief 左に曲がる関数
-     * @details 左に曲がる関数をmove.cppに渡す
-     */
-    Move(int curve_l);
-
-    /**
-     * @brief 右に曲がる関数
-     * @details 右に曲がる関数をmove.cppに渡す
-     */
-    Move(int curve_r);
-
-
+    Go();
 
 private:
     // 超音波の値を格納する配列
     std::array<Uss, uss_t::USS_NUM> uss_array;
 
     /**
-     * @brief 直進する関数
+     * @brief 直進状態の関数(通常状態)
+     * @details 直進する関数をmove.cppに渡す
      */
-    int straight;
+     goStraight;
 
     /**
-     * @brief 90度旋回する関数
+     * @brief 障害物回避の関数
+     * @details 90度回転する関数をmove.cppに渡す
      */
-    int turn_quarter;
+    moveTurning;
 
     /**
-     * @brief 右のモータを遅くする関数(左に曲がる関数)
+     * @brief 左に曲がる関数
+     * @details 左に曲がる関数をmove.cppに渡す
      */
-    int curve_l;
-
-    /**
-     * @brief 左のモータを遅くする関数
-     */
-    int curve_r;
+    moveCurve;
 
 };
 

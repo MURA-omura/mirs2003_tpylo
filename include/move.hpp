@@ -40,7 +40,7 @@ typedef enum{
 class Move{
 public:
     Move();
-    Go();
+    void go();
 
 private:
     // 超音波の値を格納する配列
@@ -50,19 +50,24 @@ private:
      * @brief 直進状態の関数(通常状態)
      * @details 直進する関数をmove.cppに渡す
      */
-     goStraight;
+     void Straight();
 
     /**
      * @brief 障害物回避の関数
      * @details 90度回転する関数をmove.cppに渡す
      */
-    moveTurning;
+    void Turning();
 
     /**
-     * @brief 左に曲がる関数
-     * @details 左に曲がる関数をmove.cppに渡す
+     * @brief 曲がる関数
+     * @details 曲がる関数をmove.cppに渡す
      */
-    moveCurve;
+    void Curve();
+
+    /**
+     * @brief 止まる関数
+     */
+    void Stop();
 
 };
 

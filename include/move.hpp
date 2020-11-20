@@ -29,7 +29,6 @@ typedef enum{
 /**
  * @brief 走行状態
  */
-
 typedef enum{
     STRAIGHT,
     TURNING,
@@ -38,17 +37,25 @@ typedef enum{
     RUN_NUM
 } run_t;
 
+
 /**
  * @brief 走行クラス
  */
 class Move{
 public:
     Move();
+
+    /**
+     * @brief 走行関数
+     * @details 走行状態をもとにプライベートな走行関数を呼ぶ
+     */
     void go();
 
 private:
-    // 超音波の値を格納する配列
+    //! 超音波の値を格納する配列
     std::array<Uss, uss_t::USS_NUM> uss_array;
+    //! 走行状態
+    run_t run_state;
 
     /**
      * @brief 直進状態の関数(通常状態)

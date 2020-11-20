@@ -11,7 +11,12 @@
 #include <wiringPiI2C.h>
 
 
-Uss::Uss(int address){
+Uss::Uss(int address):
+t_uss(50),
+uss_min(16),
+uss_max(600),
+dist_center(10),
+{
 	fd = wiringPiI2CSetup(address);
 
 	// ソフトウェアリビジョンの確認

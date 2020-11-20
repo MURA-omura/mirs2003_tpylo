@@ -29,8 +29,8 @@ public:
 
 private:
     // モータを作動させる最小カウント数
-    static const int actuate_count = 120;
-    int count = 0;
+    const int actuate_count;
+    int count;
     Hand hand;
     Spray spray;
 };

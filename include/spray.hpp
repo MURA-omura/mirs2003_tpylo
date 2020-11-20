@@ -23,11 +23,9 @@ public:
 
 private:
     //!モータを回す角度[dec]
-    static const int spray_morter = 360;
+    const int spray_morter;
     //! ギア比
-    static const float gear_rate;
-    
-
+    const float gear_rate;
 };
 
 #endif

@@ -30,12 +30,12 @@ public:
 
 private:
     //! 焦電センサのピン番号
-    static const int pyro_pin = 10;
+    const int pyro_pin;
     //! 焦電センサから値を読み取るインスタンス
     Io pyro;
 
     //! 配列のサイズ
-    static const int array_size = 10;
+    static const size_t array_size = 10;
     //! 焦電センサの値を格納する配列
     std::array<bool, array_size> pyro_array;
 };

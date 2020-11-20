@@ -26,6 +26,10 @@ typedef enum{
 	USS_NUM
 } uss_t;
 
+/**
+ * @brief 走行状態
+ */
+
 typedef enum{
     STRAIGHT,
     TURNING,

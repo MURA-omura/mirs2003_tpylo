@@ -20,11 +20,14 @@ public:
      */
     void pushBottle();
 
+
 private:
     //!モータを回す角度[dec]
     static const int spray_morter = 360;
     //! ギア比
     static const float gear_rate;
+    
+
 };
 
 #endif

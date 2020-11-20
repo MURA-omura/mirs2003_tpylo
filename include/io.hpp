@@ -18,16 +18,19 @@ public:
      * @brief ioクラスにタッチセンサのピン番号を渡す
      */
     Io(int pin);
-    int getSw();
     /**
-     * @brief ものにあたっているかを検出する関数
-     * @return bool ものにあたっていたらtrue
+     * @brief スイッチの状態を検出する関数
+     * @return bool スイッチが押されていたらtrue
      */
-    bool isTouchStuff();
+    bool getSw();
+
 
 private:
     //! タッチセンサのピン番号
     int pin;
+
+    //! 正論理か不論理かを検出する関数　(true 正論理、fals 不論理)
+    bool logic;
 };
 
 #endif

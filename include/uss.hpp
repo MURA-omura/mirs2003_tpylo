@@ -27,14 +27,14 @@ public:
 
 private:
     //! 測定の時間間隔[ms]
-    const int t_uss = 50;
+    const int t_uss;
 
     //! 測定範囲の下限・上限[cm]
-    const int uss_min =  16;
-    const int uss_max = 600;
+    const int uss_min;
+    const int uss_max;
 
     //! センサからMIRS中心までの距離[cm]
-    const int dist_center = 10;
+    const int dist_center;
 
     int fd;
 

@@ -11,11 +11,6 @@ Spray::Spray(){
 
 }
 
-bool Spray::isActionSpray(){
-
-}
-
-
-int Spray::getSensor(){
+void Spray::pushBottle(){
 
 }

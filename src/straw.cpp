@@ -8,7 +8,10 @@
 #include "straw.hpp"
 #include <stdio.h>
 
-Straw::Straw(){
+Straw::Straw():
+actuate_count(30),
+count(0)
+{
 
 }
 

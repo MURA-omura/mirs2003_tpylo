@@ -7,48 +7,71 @@
 
 
 #include "move.hpp"
+#include <stdio.h>
+#include "request.h"
 
 
+//ts_r(8, true),
 Move::Move():
+ts_l(4, false),
 uss_array{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
 {
-
+	run_state = STRAIGHT;
 }
 
-
-/*
-#include <stdio.h>
-#include <unistd.h>
-#include "arduino.h"
-#include "direction.h"
-#include "io.h"
-#include "request.h"
-#include "uss.h"
-
-int main(){
-	double volt,dist_l,dist_r;
-
-	if(io_open() != 0) return -1;
-	if(arduino_open() != 0) return -1;
-	if(direction_open() != 0) return -1;
-	if(uss_open_l() != 0) return -1;
-	if(uss_open_r() != 0) return -1;
+void Move::go(){
+	switch(run_state){
+	case STRAIGHT:
+		straight();
+		break;
+	case TURNING:
+		turning();
+		break;
+	case CURVE:
+		curve();
+		break;
+	case STOP:
+		stop();
+		break;
+	default:
+		break;
+	}
 
 	while(1){
-		//巡回
-		request_set_runmode(STR,25,100);
-		//障害物を検知した後回転する
-		dist_l = uss;
-		dist_r = uss;
-
-		if(dist_l < 30 ; dist_r < 30){
-			request_set_runmode(STP, 0, 0);
-			request_set_runmode(ROT, 45, 90);
-			while(1){
-				request_get_runmode(&state, &speed, &dist);
-				if( state == STP ) break;
-			}
+		bool flag = ts_l.getSw();
+		printf("%d\n", (int)flag);
+		if(flag){
+			stop();
 		}
 
+		run_state_t state;
+		int speed, dist;
+		request_get_runmode(&state, &speed, &dist);
+		if( state == STP ) break;
+	}
+
+	turning();
+	while(1){
+		run_state_t state;
+		int speed, dist;
+		request_get_runmode(&state, &speed, &dist);
+		if( state == STP ) break;
+	}
 }
-*/
+
+void Move::straight(){
+	request_set_runmode(STR, 30, 150);
+}
+
+void Move::turning(){
+	request_set_runmode(ROT, 60, 180);
+}
+
+void Move::curve(){
+	request_set_runmode(ROT, 0, 0);
+}
+
+void Move::stop(){
+	request_set_runmode(STP, 0, 0);
+	exit(0);
+}

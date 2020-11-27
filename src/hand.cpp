@@ -8,14 +8,17 @@
 #include "hand.hpp"
 
 
-Hand::Hand(): pyro(pyro_pin){
+Hand::Hand():
+pyro_pin(-1),
+pyro(pyro_pin, true)
+{
     std::fill(pyro_array.begin(), pyro_array.end(), false);
 }
 
 
 bool Hand::isExistHand(){
     // 配列の値を1つずつずらす
-    for(int i = 1; i < pyro_array.size(); i++){
+    for(size_t i = 1; i < pyro_array.size(); i++){
         pyro_array[i] = pyro_array[i-1];
     }
     pyro_array[0] = pyro.getSw() == 1;

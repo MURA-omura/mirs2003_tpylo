@@ -17,7 +17,7 @@ public:
     /**
      * @brief ioクラスにピン番号を渡す
      */
-    Io(int pin);
+    Io(int _pin, bool _logic);
     /**
      * @brief スイッチの状態を検出する関数
      * @return bool 正論理の時HIGHならtrue、負論理なら逆
@@ -27,7 +27,7 @@ public:
 
 private:
     //! ピン番号
-    int pin;
+    const int pin;
 
     //! 正論理か不論理かを検出する関数　(true 正論理、fals 不論理)
     bool logic;

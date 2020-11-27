@@ -14,8 +14,10 @@
 // pin_sw_l 05;
 // pin_sw_r 06;
 
-Io::Io(int pin){
-	this.pin = pin;
+Io::Io(int _pin, bool _logic):
+pin(_pin),
+logic(_logic)
+{
 	if(wiringPiSetupGpio() != 0){
 		printf("failed to open GPIO\n");
 	}
@@ -26,6 +28,7 @@ Io::Io(int pin){
 	}
 }
 
-int Io::getSw(){
-	return digitalRead(pin);
+bool Io::getSw(){
+	int value = digitalRead(pin);
+	return (bool)value == logic;
 }

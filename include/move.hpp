@@ -32,6 +32,7 @@ typedef enum{
  */
 typedef enum{
     STRAIGHT,
+    BACK,
     TURNING,
     CURVE,
     STOP,
@@ -73,6 +74,12 @@ private:
      * @details 直進する関数をmove.cppに渡す
      */
     void straight();
+
+    /**
+     * @brief 後退状態の関数
+     * @details 後退する関数をmove.cppに渡す
+     */
+    void back();
 
     /**
      * @brief 障害物回避の関数

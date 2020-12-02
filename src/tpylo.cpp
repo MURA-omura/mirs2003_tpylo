@@ -6,14 +6,16 @@
  */
 
 #include <stdio.h>
-#include "arduino.h"
+#include <unistd.h>
 
+#include "arduino.h"
 #include "move.hpp"
 #include "straw.hpp"
 
 
 int main(){
 	Move mover;
+	Straw straw;
 
 	if(arduino_open() != 0) return -1;
 	printf("press enter to start\n");
@@ -22,7 +24,8 @@ int main(){
 	while(true){
 		// 処理を記述
 		mover.go();
-		//break;
+		//straw.update();
+		usleep(50000);
 	}
 	return 0;
 }

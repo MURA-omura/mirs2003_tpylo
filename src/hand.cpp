@@ -9,8 +9,8 @@
 
 
 Hand::Hand():
-pyro_pin(-1),
-pyro(pyro_pin, true)
+pyro_pin(15),
+pyro(pyro_pin, false)
 {
     std::fill(pyro_array.begin(), pyro_array.end(), false);
 }

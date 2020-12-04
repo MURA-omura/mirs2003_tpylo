@@ -7,48 +7,98 @@
 
 
 #include "move.hpp"
+#include <stdio.h>
+#include "request.h"
 
 
+//ts_r(8, true),
 Move::Move():
-uss_array{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
+ts_l(4, false),
+uss_array{0x72, 0x71, 0x75, 0x76, 0x74, 0x70, 0x73, 0x77}
 {
-
+	run_state = STOP;
 }
 
+void Move::go(){
+	run_state_t state;
+	int speed, dist;
+	request_get_runmode(&state, &speed, &dist);
+	if(state == STP) {
+		switch(run_state){
+		case STRAIGHT:
+			run_state = TURNING;
+			break;
+		case BACK:
+			run_state = TURNING;
+			break;
+		case TURNING:
+			run_state = STRAIGHT;
+			break;
+		case CURVE:
+			run_state = STRAIGHT;
+			break;
+		case STOP:
+			run_state = STRAIGHT;
+			break;
+		default:
+			break;
+		}
+	}
 
-/*
-#include <stdio.h>
-#include <unistd.h>
-#include "arduino.h"
-#include "direction.h"
-#include "io.h"
-#include "request.h"
-#include "uss.h"
-
-int main(){
-	double volt,dist_l,dist_r;
-
-	if(io_open() != 0) return -1;
-	if(arduino_open() != 0) return -1;
-	if(direction_open() != 0) return -1;
-	if(uss_open_l() != 0) return -1;
-	if(uss_open_r() != 0) return -1;
-
-	while(1){
-		//巡回
-		request_set_runmode(STR,25,100);
-		//障害物を検知した後回転する
-		dist_l = uss;
-		dist_r = uss;
-
-		if(dist_l < 30 ; dist_r < 30){
-			request_set_runmode(STP, 0, 0);
-			request_set_runmode(ROT, 45, 90);
-			while(1){
-				request_get_runmode(&state, &speed, &dist);
-				if( state == STP ) break;
+	if(run_state == STRAIGHT){
+		for(Uss u : uss_array){
+			long val = u.getUss();
+			printf("%ld  ", val);
+			if(val > 0 && val < 50){
+				state = STP;
+				run_state = TURNING;
 			}
 		}
+		puts("");
+	}
 
+	if (state == STP){
+		switch(run_state){
+		case STRAIGHT:
+			straight();
+			break;
+		case BACK:
+			back();
+			break;
+		case TURNING:
+			turning();
+			break;
+		case CURVE:
+			curve();
+			break;
+		case STOP:
+			stop();
+			break;
+		default:
+			break;
+		}
+	}
 }
-*/
+
+void Move::straight(){
+	puts("straight\n");
+	request_set_runmode(STR, 40, 150);
+}
+
+void Move::back(){
+	puts("back\n");
+	request_set_runmode(STR, -10, -5);
+}
+
+void Move::turning(){
+	puts("turning\n");
+	request_set_runmode(ROT, 90, 180);
+}
+
+void Move::curve(){
+	request_set_runmode(ROT, 0, 0);
+}
+
+void Move::stop(){
+	request_set_runmode(STP, 0, 0);
+}

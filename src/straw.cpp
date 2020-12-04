@@ -8,13 +8,18 @@
 #include "straw.hpp"
 #include <stdio.h>
 
-Straw::Straw(){
+Straw::Straw():
+actuate_count(30),
+count(0)
+{
 
 }
 
 void Straw::update(){
     count++;
     bool pylo = hand.isExistHand();
+    printf("%d\n", (int)pylo);
+
     if(pylo && count > actuate_count){
         count = 0;
         spray.pushBottle();

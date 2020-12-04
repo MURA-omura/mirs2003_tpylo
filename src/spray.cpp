@@ -7,7 +7,10 @@
 
 #include "spray.hpp"
 
-Spray::Spray(){
+Spray::Spray():
+spray_morter(360),
+gear_rate(1.0f)
+{
 
 }
 

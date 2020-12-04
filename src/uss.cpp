@@ -15,17 +15,15 @@ Uss::Uss(int address):
 t_uss(50),
 uss_min(16),
 uss_max(600),
-dist_center(10),
+dist_center(10)
 {
 	fd = wiringPiI2CSetup(address);
 
 	// ソフトウェアリビジョンの確認
 	if(wiringPiI2CReadReg8(fd, 0x00) == 0x06){
 		printf("%x opened\n",address);
-		return 0;
 	}else{
 		printf("failed to open %x\n",address);
-		return -1;
 	}
 }
 

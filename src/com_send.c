@@ -41,6 +41,3 @@ int main() {
     return 0;
 }
 
-int num_convert_s(){
-
-}

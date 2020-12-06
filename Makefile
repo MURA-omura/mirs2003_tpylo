@@ -9,7 +9,7 @@ PRGS := tpylo
 
 # オブジェクト
 OBJS_RUN := $(addprefix $(DIR_OBJ)/, io.o uss.o arduino.o request.o)
-OBJS_POS := $(addprefix $(DIR_OBJ)/, arcohol.o hand.o move.o spray.o straw.o tpylo.o)
+OBJS_POS := $(addprefix $(DIR_OBJ)/, arcohol.o hand.o move.o sock.o spray.o straw.o tpylo.o)
 
 # コンパイルオプション
 CC      := g++

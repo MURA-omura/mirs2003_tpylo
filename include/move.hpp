@@ -53,6 +53,17 @@ public:
      */
     void go();
 
+    /**
+     * @brief 走行状態取得関数
+     */
+    int getState() { return (int)run_state; }
+
+    /**
+     * @brief Pythonパラメータセット関数
+     * @details
+     */
+    void setCamera(int power, int dist);
+
 private:
     //! 超音波の値を格納する配列
     std::array<Uss, uss_t::USS_NUM> uss_array;

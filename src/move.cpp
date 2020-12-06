@@ -9,6 +9,7 @@
 #include "move.hpp"
 #include <stdio.h>
 #include "request.h"
+#include "sock.h"
 
 
 //ts_r(8, true),
@@ -17,6 +18,10 @@ ts_l(4, false),
 uss_array{0x72, 0x71, 0x75, 0x76, 0x74, 0x70, 0x73, 0x77}
 {
 	run_state = STOP;
+}
+
+void Move::setCamera(int power, int dist){
+	return;
 }
 
 void Move::go(){

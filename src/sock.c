@@ -9,6 +9,9 @@
 #include "sock.h"
 
 
+int state = 0;
+
+
 void convertNum(char *buf, int *power, int *dist){
     signed short a, b;
     a = (int)buf[0] * 256 + (int)buf[1];
@@ -19,7 +22,8 @@ void convertNum(char *buf, int *power, int *dist){
 
 
 void convertState(char *buf, int state){
-    buf[0] = state;
+    buf[0] = 0;
+    buf[1] = state;
 }
 
 
@@ -73,10 +77,13 @@ void connectPython(Move mover) {
             convertNum(buf, &power, &dist);
             mover.setCamera(power, dist);
             printf("power: %d,  dist: %d\n", power, dist);
-            int state = mover.getState();
-            char send_str[4];
-            convertState(send_str, state);
-            send( client_sockfd, send_str, 4, MSG_NOSIGNAL );
+            //int state = mover.getState();
+            char send_str[2];
+            send_str[0] = 0;
+            send_str[1] = state;
+            //convertState(send_str, state);
+            printf("%x %x\n", send_str[0], send_str[1]);
+            send( client_sockfd, send_str, 2, MSG_NOSIGNAL );
         }
     }
 

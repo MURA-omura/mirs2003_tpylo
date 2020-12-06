@@ -12,58 +12,63 @@
 #include "sock.h"
 
 
+extern int state;
+
+
 //ts_r(8, true),
 Move::Move():
 ts_l(4, false),
 uss_array{0x72, 0x71, 0x75, 0x76, 0x74, 0x70, 0x73, 0x77}
 {
-	run_state = STOP;
+	next_state = STOP;
+	state = 0;
 }
+
 
 void Move::setCamera(int power, int dist){
 	return;
 }
 
+
 void Move::go(){
-	run_state_t state;
 	int speed, dist;
-	request_get_runmode(&state, &speed, &dist);
-	if(state == STP) {
-		switch(run_state){
+	request_get_runmode(&run_state, &speed, &dist);
+	if(run_state == STP) {
+		switch(next_state){
 		case STRAIGHT:
-			run_state = TURNING;
+			next_state = TURNING;
 			break;
 		case BACK:
-			run_state = TURNING;
+			next_state = TURNING;
 			break;
 		case TURNING:
-			run_state = STRAIGHT;
+			next_state = STRAIGHT;
 			break;
 		case CURVE:
-			run_state = STRAIGHT;
+			next_state = STRAIGHT;
 			break;
 		case STOP:
-			run_state = STRAIGHT;
+			next_state = STRAIGHT;
 			break;
 		default:
 			break;
 		}
 	}
 
-	if(run_state == STRAIGHT){
+	if(next_state == STRAIGHT){
 		for(Uss u : uss_array){
 			long val = u.getUss();
 			printf("%ld  ", val);
 			if(val > 0 && val < 50){
-				state = STP;
-				run_state = TURNING;
+				run_state = STP;
+				next_state = TURNING;
 			}
 		}
 		puts("");
 	}
 
-	if (state == STP){
-		switch(run_state){
+	if (run_state == STP){
+		switch(next_state){
 		case STRAIGHT:
 			straight();
 			break;
@@ -86,24 +91,26 @@ void Move::go(){
 }
 
 void Move::straight(){
-	puts("straight\n");
+	state = 1;
 	request_set_runmode(STR, 40, 150);
 }
 
 void Move::back(){
-	puts("back\n");
+	state = 2;
 	request_set_runmode(STR, -10, -5);
 }
 
 void Move::turning(){
-	puts("turning\n");
+	state = 3;
 	request_set_runmode(ROT, 90, 180);
 }
 
 void Move::curve(){
+	state = 4;
 	request_set_runmode(ROT, 0, 0);
 }
 
 void Move::stop(){
+	state = 0;
 	request_set_runmode(STP, 0, 0);
 }

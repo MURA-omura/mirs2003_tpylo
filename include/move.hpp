@@ -11,6 +11,7 @@
 #include <array>
 #include "io.hpp"
 #include "uss.hpp"
+#include "request.h"
 
 /**
  * @brief 超音波の場所の列挙
@@ -56,7 +57,7 @@ public:
     /**
      * @brief 走行状態取得関数
      */
-    int getState() { return (int)run_state; }
+    //int getState() { return state; }
 
     /**
      * @brief Pythonパラメータセット関数
@@ -72,7 +73,9 @@ private:
     //! タッチセンサ右
     //Io ts_r;
     //! 走行状態
-    run_t run_state;
+    run_t next_state;
+    run_state_t run_state;
+    //int state;
 
     /**
      * @brief 状態をセットする関数

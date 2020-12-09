@@ -15,9 +15,9 @@
 extern int state;
 
 
-//ts_r(8, true),
 Move::Move():
 ts_l(4, false),
+ts_r(8, false),
 uss_array{0x72, 0x71, 0x75, 0x76, 0x74, 0x70, 0x73, 0x77}
 {
 	next_state = STOP;
@@ -65,6 +65,10 @@ void Move::go(){
 			}
 		}
 		puts("");
+		if(ts_l.getSw() || ts_r.getSw()){
+			run_state = STP;
+			next_state = BACK;
+		}
 	}
 
 	if (run_state == STP){

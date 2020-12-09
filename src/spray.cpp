@@ -6,6 +6,8 @@
  */
 
 #include "spray.hpp"
+#include "hand.hpp"
+#include <stdio.h>
 
 Spray::Spray():
 spray_morter(360),
@@ -15,5 +17,5 @@ gear_rate(1.0f)
 }
 
 void Spray::pushBottle(){
-
+    int turn = spray_morter;
 }

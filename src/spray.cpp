@@ -8,14 +8,16 @@
 #include "spray.hpp"
 #include "hand.hpp"
 #include <stdio.h>
+#include <unistd.h>
 
 Spray::Spray():
 spray_morter(360),
 gear_rate(1.0f)
 {
-
+    return;
 }
 
 void Spray::pushBottle(){
     int turn = spray_morter;
+
 }

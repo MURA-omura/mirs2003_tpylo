@@ -19,10 +19,10 @@ public:
      */
     Uss(int address);
     /**
-     * @brief 距離が近づいているかを検出する関数
-     * @return long 4byteまで読み取れる
+     * @brief 距離が近づいているか判断する関数
+     * @return bool 障害物が近くにあるか
      */
-    long getUss();
+     bool isObstacle();
 
 
 private:
@@ -38,6 +38,11 @@ private:
 
     int fd;
 
+    /**
+     * @brief 障害物までの距離を検出する関数
+     * @return long 4byteまで読み取れる
+     */
+    long getUss();
 };
 
 

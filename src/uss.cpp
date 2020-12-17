@@ -28,6 +28,12 @@ dist_center(10)
 }
 
 
+bool Uss::isObstacle(){
+	long val = getUss();
+	return (0 < val && val < 50);
+}
+
+
 long Uss::getUss(){
 	unsigned char lowbyte, highbyte;
 	long val;

@@ -30,7 +30,7 @@ int main(){
 	while(true){
 		// 処理を記述
 		mover.go();
-		//straw.update();
+		straw.update();
 		usleep(50000);
 	}
 	return 0;

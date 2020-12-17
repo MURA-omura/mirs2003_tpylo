@@ -34,7 +34,7 @@ typedef enum{
 typedef enum{
     STRAIGHT,
     BACK,
-    TURNING,
+    TURN,
     CURVE,
     STOP,
     RUN_NUM
@@ -71,18 +71,19 @@ private:
     //! タッチセンサ左
     Io ts_l;
     //! タッチセンサ右
-    //Io ts_r;
+    Io ts_r;
     //! 走行状態
     run_t next_state;
     run_state_t run_state;
-    //int state;
+    // 走行用パラメータ
+    int run_param;
 
     /**
      * @brief 状態をセットする関数
      * @details 超音波の値を読み取り、その値によって状態を変化させる
      * @return 走行状態
      */
-    run_t setState();
+    void setState();
     /**
      * @brief 直進状態の関数(通常状態)
      * @details 直進する関数をmove.cppに渡す
@@ -99,13 +100,13 @@ private:
      * @brief 障害物回避の関数
      * @details 90度回転する関数をmove.cppに渡す
      */
-    void turning();
+    void turning(int deg);
 
     /**
      * @brief 曲がる関数
      * @details 曲がる関数をmove.cppに渡す
      */
-    void curve();
+    void curve(int adjust);
 
     /**
      * @brief 止まる関数

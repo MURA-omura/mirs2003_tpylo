@@ -7,7 +7,7 @@
 void request_set_runmode(run_state_t state, int speed, int dist){
 	command_data_t command_data;
 
-	command_data.val[0] = ((state == STR) ? 2 : (state == ROT) ? 3 : 1);
+	command_data.val[0] = state + 1;
 	command_data.val[1] = speed;
 	command_data.val[2] = dist;
 
@@ -77,9 +77,19 @@ int request_get_batt(double *volt){
 	}
 }
 
+void request_set_spray(){
+	command_data_t command_data;
+
+	command_data.val[0] = 20;
+	command_data.val[1] = 360;
+	command_data.val[2] = 0;
+
+	arduino_send(command_data);
+}
+
 int request_get_arcohol(int *pressure){
 	command_data_t command_data;
-	command_data.val[0] = 13;
+	command_data.val[0] = 21;
 	command_data.val[1] = 0;
 	command_data.val[2] = 0;
 

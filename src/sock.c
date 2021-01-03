@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -9,21 +8,12 @@
 #include "sock.h"
 
 
-int state = 0;
-
-
 void convertNum(char *buf, int *power, int *dist){
     signed short a, b;
     a = (int)buf[0] * 256 + (int)buf[1];
     b = (int)buf[2] * 256 + (int)buf[3];
     *power = a - 128;
     *dist = b;
-}
-
-
-void convertState(char *buf, int state){
-    buf[0] = 0;
-    buf[1] = state;
 }
 
 
@@ -49,7 +39,6 @@ void connectPython(Move mover) {
     addr.sin_port = htons( 51000 );
     // ローカルホストを指定
     addr.sin_addr.s_addr = inet_addr( "127.0.0.1" );
-    //addr.sin_addr.s_addr = inet_addr( "172.25.11.167" );
     //addr.sin_addr.s_addr = INADDR_ANY;
 
     // バインド
@@ -75,15 +64,15 @@ void connectPython(Move mover) {
         //printf( "rsize = %d\n", rsize );
         if ( rsize > 0 ) {
             convertNum(buf, &power, &dist);
-            mover.setCamera(power, dist);
+            if(dist > 0) G_power = power;
             printf("power: %d,  dist: %d\n", power, dist);
-            //int state = mover.getState();
-            char send_str[2];
+            char send_str[4];
             send_str[0] = 0;
-            send_str[1] = state;
-            //convertState(send_str, state);
-            printf("%x %x\n", send_str[0], send_str[1]);
-            send( client_sockfd, send_str, 2, MSG_NOSIGNAL );
+            send_str[1] = G_state;
+            send_str[2] = 0;
+            send_str[3] = G_audio;
+            //printf("%x %x\n", send_str[0], send_str[1]);
+            send( client_sockfd, send_str, 4, MSG_NOSIGNAL );
         }
     }
 

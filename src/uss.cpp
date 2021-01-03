@@ -11,11 +11,12 @@
 #include <wiringPiI2C.h>
 
 
-Uss::Uss(int address):
+Uss::Uss(int address, long dist):
 t_uss(50),
 uss_min(16),
 uss_max(600),
-dist_center(10)
+dist_center(10),
+dist_min(dist)
 {
 	fd = wiringPiI2CSetup(address);
 
@@ -30,7 +31,7 @@ dist_center(10)
 
 bool Uss::isObstacle(){
 	long val = getUss();
-	return (0 < val && val < 50);
+	return (0 < val && val < dist_min);
 }
 
 

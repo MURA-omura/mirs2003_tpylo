@@ -9,19 +9,14 @@
 #include "move.hpp"
 #include <stdio.h>
 #include "request.h"
-#include "sock.h"
-
-
-extern int state;
 
 
 Move::Move():
 ts_l(4, false),
 ts_r(8, false),
-uss_array{0x72, 0x71, 0x75, 0x76, 0x74, 0x70, 0x73, 0x77}
+uss_array{{{0x72, 60}, {0x71, 60}, {0x75, 60}, {0x76, 50}, {0x74, 40}, {0x70, 35}, {0x73, 40}, {0x77, 35}}}
 {
 	next_state = STOP;
-	state = 0;
 }
 
 
@@ -58,6 +53,11 @@ void Move::go(){
 	if(next_state == STRAIGHT){
 		setState();
 	}
+
+	run_state_t run;
+	int sp, ds;
+	request_get_runmode(&run, &sp, &ds);
+	printf("%d,  %d,  %d\n", run, sp, ds);
 
 	if (run_state == STP){
 		switch(next_state){
@@ -122,6 +122,14 @@ void Move::setState(){
 		next_state = CURVE;
 		run_param = 5;
 	}
+	else if(G_power != 0){
+		// 左にカーブ
+		run_state = STP;
+		next_state = CURVE;
+		run_param = G_power;
+		printf("human %d\n", run_param);
+		G_power = 0;
+	}
 
 	if(ts_l.getSw() || ts_r.getSw()){
 		// 衝突していたら強制的に後ろに下げる
@@ -134,26 +142,26 @@ void Move::setState(){
 
 
 void Move::straight(){
-	state = 1;
-	request_set_runmode(STR, 40, 150);
+	G_state = 1;
+	request_set_runmode(STR, 30, 150);
 }
 
 void Move::back(){
-	state = 2;
+	G_state = 2;
 	request_set_runmode(STR, -10, -5);
 }
 
 void Move::turning(int deg){
-	state = 3;
+	G_state = 3;
 	request_set_runmode(ROT, deg > 0 ? 90 : -90, deg);
 }
 
 void Move::curve(int adjust){
-	state = 4;
-	request_set_runmode(CRV, 40, adjust);
+	G_state = 4;
+	request_set_runmode(CRV, 30, adjust);
 }
 
 void Move::stop(){
-	state = 0;
+	G_state = 0;
 	request_set_runmode(STP, 0, 0);
 }

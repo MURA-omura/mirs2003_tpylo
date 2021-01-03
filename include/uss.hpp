@@ -17,7 +17,7 @@ public:
     /**
      * @brief Ioクラスに超音波センサのピン番号を渡す
      */
-    Uss(int address);
+    Uss(int address, long dist);
     /**
      * @brief 距離が近づいているか判断する関数
      * @return bool 障害物が近くにあるか
@@ -35,6 +35,7 @@ private:
 
     //! センサからMIRS中心までの距離[cm]
     const int dist_center;
+    const long dist_min;
 
     int fd;
 

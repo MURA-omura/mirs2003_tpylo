@@ -9,6 +9,7 @@
 #define __MOVE__
 
 #include <array>
+//#include <vector>
 #include "io.hpp"
 #include "uss.hpp"
 #include "request.h"
@@ -67,7 +68,8 @@ public:
 
 private:
     //! 超音波の値を格納する配列
-    std::array<Uss, uss_t::USS_NUM> uss_array;
+    //std::vector<Uss> uss_array;
+    std::array<Uss, USS_NUM> uss_array;
     //! タッチセンサ左
     Io ts_l;
     //! タッチセンサ右

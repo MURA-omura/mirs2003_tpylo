@@ -9,6 +9,7 @@
 
 
 Hand::Hand():
+changed_flag(false),
 pyro_pin(15),
 pyro(pyro_pin, false)
 {
@@ -28,6 +29,14 @@ bool Hand::isExistHand(){
     for(bool pr : pyro_array){
         if(pr) flag_counter++;
     }
+    if(flag_counter == 0) changed_flag = false;
 
-    return flag_counter == array_size;
+    if(changed_flag) return false;
+    else{
+        if(flag_counter == array_size){
+            changed_flag = true;
+            return true;
+        }
+        else return false;
+    }
 }

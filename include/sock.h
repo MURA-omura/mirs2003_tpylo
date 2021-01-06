@@ -23,6 +23,7 @@ void connectPython(Move mover);
 
 extern int G_state;
 extern int G_power;
+extern int G_dist;
 extern int G_audio;
 
 #endif

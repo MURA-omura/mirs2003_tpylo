@@ -9,6 +9,7 @@
 #include "move.hpp"
 #include <stdio.h>
 #include "request.h"
+#inlcude "sock.h"
 
 
 Move::Move():
@@ -17,11 +18,6 @@ ts_r(8, false),
 uss_array{{{0x72, 60}, {0x71, 60}, {0x75, 60}, {0x76, 50}, {0x74, 40}, {0x70, 35}, {0x73, 40}, {0x77, 35}}}
 {
 	next_state = STOP;
-}
-
-
-void Move::setCamera(int power, int dist){
-	return;
 }
 
 
@@ -44,6 +40,8 @@ void Move::go(){
 			break;
 		case STOP:
 			next_state = STRAIGHT;
+			break;
+		case SPRAY:
 			break;
 		default:
 			break;
@@ -75,6 +73,9 @@ void Move::go(){
 			break;
 		case STOP:
 			stop();
+			break;
+		case SPRAY:
+			spray();
 			break;
 		default:
 			break;
@@ -131,6 +132,12 @@ void Move::setState(){
 		G_power = 0;
 	}
 
+	if(G_dist > 10){
+		run_state = STP;
+		next_state = SPRAY;
+		run_param = 0;
+	}
+
 	if(ts_l.getSw() || ts_r.getSw()){
 		// 衝突していたら強制的に後ろに下げる
 		run_state = STP;
@@ -163,5 +170,10 @@ void Move::curve(int adjust){
 
 void Move::stop(){
 	G_state = 0;
+	request_set_runmode(STP, 0, 0);
+}
+
+void Move::spray(){
+	G_state = 5;
 	request_set_runmode(STP, 0, 0);
 }

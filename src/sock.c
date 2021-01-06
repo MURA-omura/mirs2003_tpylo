@@ -64,7 +64,10 @@ void connectPython(Move mover) {
         //printf( "rsize = %d\n", rsize );
         if ( rsize > 0 ) {
             convertNum(buf, &power, &dist);
-            if(dist > 0) G_power = power;
+            if(dist > 10) {
+                G_power = power;
+                G_dist = dist;
+            }
             printf("power: %d,  dist: %d\n", power, dist);
             char send_str[4];
             send_str[0] = 0;

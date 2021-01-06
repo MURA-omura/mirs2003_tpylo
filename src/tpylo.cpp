@@ -41,8 +41,12 @@ int main(){
 		if(sw_state && !sw_before) sw_flag = !sw_flag;
 
 		if(sw_flag){
-			mover.go();
-			//straw.update();
+			if(G_state < run_t::SPRAY){
+				mover.go();
+			}
+			else{
+				straw.update();
+			}
 		}
 		usleep(50000);
 	}

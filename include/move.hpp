@@ -38,6 +38,7 @@ typedef enum{
     TURN,
     CURVE,
     STOP,
+    SPRAY,
     RUN_NUM
 } run_t;
 
@@ -58,13 +59,8 @@ public:
     /**
      * @brief 走行状態取得関数
      */
-    //int getState() { return state; }
+    //int getState() { return next_state; }
 
-    /**
-     * @brief Pythonパラメータセット関数
-     * @details
-     */
-    void setCamera(int power, int dist);
 
 private:
     //! 超音波の値を格納する配列
@@ -114,6 +110,11 @@ private:
      * @brief 止まる関数
      */
     void stop();
+
+    /**
+     * @brief 噴射するために一時停止する関数
+     */
+    void spray();
 
 };
 

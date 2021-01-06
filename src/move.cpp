@@ -9,12 +9,14 @@
 #include "move.hpp"
 #include <stdio.h>
 #include "request.h"
-#inlcude "sock.h"
+#include "sock.h"
 
 
 Move::Move():
 ts_l(4, false),
 ts_r(8, false),
+sw_pw(7, false),
+sw_ad(6, false),
 uss_array{{{0x72, 60}, {0x71, 60}, {0x75, 60}, {0x76, 50}, {0x74, 40}, {0x70, 35}, {0x73, 40}, {0x77, 35}}}
 {
 	next_state = STOP;
@@ -84,6 +86,20 @@ void Move::go(){
 }
 
 
+void Move::getSwitch(){
+	sw_before = sw_state;
+	sw_state = sw_pw.getSw();
+	G_audio = (int)sw_ad.getSw();
+	if(sw_state && !sw_before) sw_flag = !sw_flag;
+	if(sw_flag){
+		next_state = STRAIGHT;
+	}
+	else{
+		next_state = STOP;
+	}
+}
+
+
 void Move::setState(){
 	bool uss_flag[USS_NUM];
 	for(int i = 0; i < USS_NUM; i++){
@@ -132,7 +148,7 @@ void Move::setState(){
 		G_power = 0;
 	}
 
-	if(G_dist > 10){
+	if(G_dist > 30){
 		run_state = STP;
 		next_state = SPRAY;
 		run_param = 0;

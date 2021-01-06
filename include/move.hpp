@@ -9,7 +9,6 @@
 #define __MOVE__
 
 #include <array>
-//#include <vector>
 #include "io.hpp"
 #include "uss.hpp"
 #include "request.h"
@@ -59,7 +58,7 @@ public:
     /**
      * @brief 走行状態取得関数
      */
-    //int getState() { return next_state; }
+    void resume() { next_state = STRAIGHT; }
 
 
 private:
@@ -70,11 +69,19 @@ private:
     Io ts_l;
     //! タッチセンサ右
     Io ts_r;
+    //! 起動用スイッチ
+    Io sw_pw;
+    //! オーディオ用スイッチ
+	Io sw_ad;
     //! 走行状態
     run_t next_state;
     run_state_t run_state;
     // 走行用パラメータ
     int run_param;
+    // 起動用スイッチ変数
+    bool sw_state = false, sw_before = false, sw_flag = false;
+
+    void getSwitch();
 
     /**
      * @brief 状態をセットする関数

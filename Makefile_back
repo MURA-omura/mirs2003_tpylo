@@ -2,27 +2,19 @@
 DIR_SRC  := ./src
 DIR_HEAD := ./include
 DIR_OBJ  := ./build
-DIR_IMG  := ./img
 
 # 生成するプログラム
-PRGS :=
-PRGS += test_io test_uss test_request test_direction
-PRGS += test_capture test_number test_dir_num
-PRGS += test_server test_position
-PRGS += pilot
+PRGS := tpylo
+# PRGS += test_io test_uss test_request test_direction test_position
 
 # オブジェクト
-OBJS_RUN := $(addprefix $(DIR_OBJ)/, io.o uss.o arduino.o request.o direction.o)
-OBJS_CAP := $(addprefix $(DIR_OBJ)/, get_img.o)
-OBJS_NUM := $(addprefix $(DIR_OBJ)/, number_search.o number_detect.o)
-OBJS_SVR := $(addprefix $(DIR_OBJ)/, server.o)
-OBJS_POS := $(addprefix $(DIR_OBJ)/, position.o)
+OBJS_RUN := $(addprefix $(DIR_OBJ)/, io.o uss.o arduino.o request.o)
+OBJS_POS := $(addprefix $(DIR_OBJ)/, arcohol.o hand.o move.o sock.o spray.o straw.o tpylo.o)
 
 # コンパイルオプション
 CC      := g++
-G++      := g++
-CFLAGS  := -O2 -Wall -MMD -MP `pkg-config --cflags opencv`
-LDFLAGS := -lm -lpthread -lwiringPi `pkg-config --libs opencv`
+CFLAGS  := -O2 -Wall -MMD -MP
+LDFLAGS := -lm -lpthread -lwiringPi
 INCLUDE := -I $(DIR_HEAD)
 
 # 全コンパイル・ファイル削除用ターゲット
@@ -33,7 +25,6 @@ all: $(PRGS)
 clean:
 	$(RM) $(PRGS)
 	$(RM) $(DIR_OBJ)/*.o $(DIR_OBJ)/*.d
-	$(RM) $(DIR_IMG)/*.jpg
 
 # パターンルール
 $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
@@ -42,13 +33,13 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
 
 $(DIR_OBJ)/%.o: $(DIR_SRC)/%.cpp
 	@if [ ! -d $(DIR_OBJ) ]; then echo "mkdir $(DIR_OBJ)"; mkdir $(DIR_OBJ); fi
-	$(G++) -c $(CFLAGS) $(INCLUDE) $< -o $@
+	$(CC) -c $(CFLAGS) $(INCLUDE) $< -o $@
 
 # 依存関係ファイルの読み込み
 -include $(DIR_OBJ)/*.d
 
 # プログラム毎に生成ルールを記述
-pilot: $(OBJS_RUN) $(OBJS_CAP) $(OBJS_NUM) $(OBJS_CIR) $(OBJS_SVR) $(OBJS_POS) $(DIR_OBJ)/pilot.o
+tpylo: $(OBJS_RUN) $(OBJS_CAP) $(OBJS_NUM) $(OBJS_CIR) $(OBJS_SVR) $(OBJS_POS) $(DIR_OBJ)/tpylo.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
 test_io: $(OBJS_RUN) $(DIR_OBJ)/test_io.o

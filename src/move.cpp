@@ -7,17 +7,15 @@
 
 
 #include "move.hpp"
-#include <stdio.h>
 #include "request.h"
 #include "sock.h"
 
 
 Move::Move():
+sw_pw(7, false),
 ts_l(4, false),
 ts_r(8, false),
-sw_pw(7, false),
-sw_ad(6, false),
-uss_array{{{0x72, 60}, {0x71, 60}, {0x75, 60}, {0x76, 50}, {0x74, 40}, {0x70, 35}, {0x73, 40}, {0x77, 35}}}
+sw_ad(6, false)
 {
 	next_state = STOP;
 }
@@ -50,8 +48,20 @@ void Move::go(){
 		}
 	}
 
-	if(next_state == STRAIGHT){
-		setState();
+	if(!sw_pw.getSw()) next_state = STOP;
+	if(next_state == STRAIGHT) setState();
+	if(G_dist > 30){
+		run_state = STP;
+		next_state = SPRAY;
+		run_param = 0;
+	}
+
+	if(ts_l.getSw() || ts_r.getSw()){
+		// 衝突していたら強制的に後ろに下げる
+		run_state = STP;
+		next_state = BACK;
+		if(ts_l.getSw()) run_param = 135;
+		else run_param = -135;
 	}
 
 	run_state_t run;
@@ -86,81 +96,8 @@ void Move::go(){
 }
 
 
-void Move::getSwitch(){
-	sw_before = sw_state;
-	sw_state = sw_pw.getSw();
-	G_audio = (int)sw_ad.getSw();
-	if(sw_state && !sw_before) sw_flag = !sw_flag;
-	if(sw_flag){
-		next_state = STRAIGHT;
-	}
-	else{
-		next_state = STOP;
-	}
-}
-
-
 void Move::setState(){
-	bool uss_flag[USS_NUM];
-	for(int i = 0; i < USS_NUM; i++){
-		uss_flag[i] = uss_array[i].isObstacle();
-		printf("%d  ", (int)uss_flag[i]);
-	}
-	puts("");
-
-	if((uss_flag[FRONT_L] && uss_flag[FRONT_R]) || uss_flag[FRONT_U] || uss_flag[FRONT_D]){
-		// 135度旋回
-		run_state = STP;
-		next_state = TURN;
-		if(uss_flag[FRONT_L] < uss_flag[FRONT_R]) run_param = 135;
-		else run_param = -135;
-	}
-	else if(uss_flag[FRONT_L]){
-		// 右に45度旋回
-		run_state = STP;
-		next_state = TURN;
-		run_param = 45;
-	}
-	else if(uss_flag[FRONT_R]){
-		// 左に45度旋回
-		run_state = STP;
-		next_state = TURN;
-		run_param = -45;
-	}
-	else if(uss_flag[LEFT_U] || uss_flag[LEFT_D]){
-		// 右にカーブ
-		run_state = STP;
-		next_state = CURVE;
-		run_param = -5;
-	}
-	else if(uss_flag[RIGHT_U] || uss_flag[RIGHT_D]){
-		// 左にカーブ
-		run_state = STP;
-		next_state = CURVE;
-		run_param = 5;
-	}
-	else if(G_power != 0){
-		// 左にカーブ
-		run_state = STP;
-		next_state = CURVE;
-		run_param = G_power;
-		printf("human %d\n", run_param);
-		G_power = 0;
-	}
-
-	if(G_dist > 30){
-		run_state = STP;
-		next_state = SPRAY;
-		run_param = 0;
-	}
-
-	if(ts_l.getSw() || ts_r.getSw()){
-		// 衝突していたら強制的に後ろに下げる
-		run_state = STP;
-		next_state = BACK;
-		if(ts_l.getSw()) run_param = 135;
-		else run_param = -135;
-	}
+	
 }
 
 

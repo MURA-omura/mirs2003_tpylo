@@ -9,24 +9,9 @@
 #define __MOVE__
 
 #include <array>
+#include "alternate.hpp"
 #include "io.hpp"
-#include "uss.hpp"
 #include "request.h"
-
-/**
- * @brief 超音波の場所の列挙
- */
-typedef enum{
-	FRONT_L,
-	FRONT_R,
-    FRONT_U,
-    FRONT_D,
-    LEFT_U,
-    LEFT_D,
-    RIGHT_U,
-    RIGHT_D,
-	USS_NUM
-} uss_t;
 
 /**
  * @brief 走行状態
@@ -62,15 +47,12 @@ public:
 
 
 private:
-    //! 超音波の値を格納する配列
-    //std::vector<Uss> uss_array;
-    std::array<Uss, USS_NUM> uss_array;
+    //! 起動用スイッチ
+    Alternate sw_pw;
     //! タッチセンサ左
     Io ts_l;
     //! タッチセンサ右
     Io ts_r;
-    //! 起動用スイッチ
-    Io sw_pw;
     //! オーディオ用スイッチ
 	Io sw_ad;
     //! 走行状態
@@ -78,10 +60,6 @@ private:
     run_state_t run_state;
     // 走行用パラメータ
     int run_param;
-    // 起動用スイッチ変数
-    bool sw_state = false, sw_before = false, sw_flag = false;
-
-    void getSwitch();
 
     /**
      * @brief 状態をセットする関数

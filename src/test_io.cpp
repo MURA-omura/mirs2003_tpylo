@@ -1,20 +1,20 @@
-#include <stdio.h>
+#include <cstdio>
 #include <unistd.h>
+#include "alternate.hpp"
 #include "io.hpp"
 
 int main(){
-	Io gpios[] = {
-		Io(4, false),
-		Io(8, false)
-	};
+    Alternate sw_pw(7, false);
+    Io ts_l(4, false);
+    Io ts_r(8, false);
+	Io sw_ad(6, false);
 
 	while(1){
-		for(int i = 0; i < (int)gpios.size(); i++){
-			printf("switch%d: %d,  ", (int)i, (int)gpios[i].getSw());
-		}
-		printf("\n");
-		usleep(100 * 1000);
+		printf("pw:%d,  ", (int)sw_pw.getSw());
+		printf("tl:%d,  ", (int)ts_l.getSw());
+		printf("tr:%d,  ", (int)ts_r.getSw());
+		printf("ad:%d\n", (int)sw_ad.getSw());
+		usleep(50000);
 	}
-
 	return 0;
 }

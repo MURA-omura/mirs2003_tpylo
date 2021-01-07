@@ -8,8 +8,12 @@ PRGS := tpylo
 # PRGS += test_io test_uss test_request test_direction test_position
 
 # オブジェクト
-OBJS_RUN := $(addprefix $(DIR_OBJ)/, io.o uss.o arduino.o request.o)
-OBJS_POS := $(addprefix $(DIR_OBJ)/, arcohol.o hand.o move.o sock.o spray.o straw.o tpylo.o)
+OBJS_RUN := $(addprefix $(DIR_OBJ)/, tpylo.o test_io.o test_straw.o test_uss.o)
+OBJS_UPS := $(addprefix $(DIR_OBJ)/, move.o straw.o ussmgr.o)
+OBJS_STR := $(addprefix $(DIR_OBJ)/, hand.o spray.o)
+OBJS_USS := $(addprefix $(DIR_OBJ)/, uss.o)
+OBJS_UTL := $(addprefix $(DIR_OBJ)/, io.o)
+OBJS_ETC := $(addprefix $(DIR_OBJ)/, alternate.o arcohol.o arduino.o request.o sock.o)
 
 # コンパイルオプション
 CC      := g++
@@ -39,32 +43,17 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.cpp
 -include $(DIR_OBJ)/*.d
 
 # プログラム毎に生成ルールを記述
-tpylo: $(OBJS_RUN) $(OBJS_CAP) $(OBJS_NUM) $(OBJS_CIR) $(OBJS_SVR) $(OBJS_POS) $(DIR_OBJ)/tpylo.o
+tpylo: $(OBJS_UPS) $(OBJS_STR) $(OBJS_USS) $(OBJS_UTL) $(OBJS_ETC) $(DIR_OBJ)/tpylo.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-test_io: $(OBJS_RUN) $(DIR_OBJ)/test_io.o
+test_io: $(OBJS_UTL) $(DIR_OBJ)/test_io.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-test_uss: $(OBJS_RUN) $(DIR_OBJ)/test_uss.o
+test_request: $(DIR_OBJ)/test_request.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-test_request: $(OBJS_CAP) $(OBJS_NUM) $(OBJS_RUN) $(DIR_OBJ)/test_request.o
+test_straw: $(OBJS_STR) $(OBJS_UTL) $(DIR_OBJ)/test_uss.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-test_direction: $(OBJS_RUN) $(DIR_OBJ)/test_direction.o
-	$(CC) $(LDFLAGS) $^ -o $@
-
-test_capture: $(OBJS_CAP) $(DIR_OBJ)/test_capture.o
-	$(CC) $(LDFLAGS) $^ -o $@
-
-test_number: $(OBJS_CAP) $(OBJS_NUM) $(OBJS_RUN) $(DIR_OBJ)/test_number.o
-	$(CC) $(LDFLAGS) $^ -o $@
-
-test_dir_num: $(OBJS_RUN) $(OBJS_CAP) $(OBJS_NUM) $(DIR_OBJ)/test_dir_num.o
-	$(CC) $(LDFLAGS) $^ -o $@
-
-test_server: $(OBJS_SVR) $(DIR_OBJ)/test_server.o
-	$(CC) $(LDFLAGS) $^ -o $@
-
-test_position: $(OBJS_POS) $(DIR_OBJ)/test_position.o
+test_uss: $(OBJS_USS) $(DIR_OBJ)/test_uss.o
 	$(CC) $(LDFLAGS) $^ -o $@

@@ -9,11 +9,9 @@
 #include <stdio.h>
 
 Straw::Straw():
-actuate_count(30),
+actuate_count(20),
 count(0)
-{
-    return;
-}
+{}
 
 void Straw::update(){
     count++;

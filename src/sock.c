@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -6,6 +7,11 @@
 #include <unistd.h>
 #include <pthread.h>
 #include "sock.h"
+
+int G_state = 0;
+int G_power = 0;
+int G_dist = 0;
+int G_audio = 0;
 
 
 void convertNum(char *buf, int *power, int *dist){
@@ -64,11 +70,9 @@ void connectPython(Move mover) {
         //printf( "rsize = %d\n", rsize );
         if ( rsize > 0 ) {
             convertNum(buf, &power, &dist);
-            if(dist > 10) {
-                G_power = power;
-                G_dist = dist;
-            }
-            printf("power: %d,  dist: %d\n", power, dist);
+            G_power = power;
+            G_dist = dist;
+            //printf("power: %d,  dist: %d\n", power, dist);
             char send_str[4];
             send_str[0] = 0;
             send_str[1] = G_state;

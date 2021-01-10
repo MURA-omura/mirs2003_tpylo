@@ -7,6 +7,7 @@
 
 
 #include "move.hpp"
+#include <stdio.h>
 #include "request.h"
 #include "sock.h"
 
@@ -15,7 +16,8 @@ Move::Move():
 sw_pw(7, false),
 ts_l(4, false),
 ts_r(8, false),
-sw_ad(6, false)
+sw_ad(6, false),
+uss_count(0)
 {
 	next_state = STOP;
 }
@@ -48,9 +50,13 @@ void Move::go(){
 		}
 	}
 
-	if(!sw_pw.getSw()) next_state = STOP;
-	if(next_state == STRAIGHT) setState();
-	if(G_dist > 30){
+	uss_count++;
+	if(next_state == STRAIGHT && uss_count % 3 == 0){
+		int nstate;
+		ussMgr.searchUss(&run_state, &nstate, &run_param);
+		next_state = (run_t)nstate;
+	}
+	if(G_dist > 80){
 		run_state = STP;
 		next_state = SPRAY;
 		run_param = 0;
@@ -60,14 +66,20 @@ void Move::go(){
 		// 衝突していたら強制的に後ろに下げる
 		run_state = STP;
 		next_state = BACK;
-		if(ts_l.getSw()) run_param = 135;
-		else run_param = -135;
+		if(ts_l.getSw()) run_param = -135;
+		else run_param = 135;
 	}
 
 	run_state_t run;
 	int sp, ds;
 	request_get_runmode(&run, &sp, &ds);
-	printf("%d,  %d,  %d\n", run, sp, ds);
+	//printf("%d,  %d,  %d\n", run, sp, ds);
+
+	G_audio = (int)sw_ad.getSw();
+	if(!sw_pw.getSw()) {
+		run_state = STP;
+		next_state = STOP;
+	}
 
 	if (run_state == STP){
 		switch(next_state){
@@ -96,14 +108,15 @@ void Move::go(){
 }
 
 
-void Move::setState(){
-	
+void Move::resume(){
+	next_state = STRAIGHT;
+	G_state = 1;
 }
 
 
 void Move::straight(){
 	G_state = 1;
-	request_set_runmode(STR, 30, 150);
+	request_set_runmode(STR, 20, 150);
 }
 
 void Move::back(){
@@ -118,7 +131,7 @@ void Move::turning(int deg){
 
 void Move::curve(int adjust){
 	G_state = 4;
-	request_set_runmode(CRV, 30, adjust);
+	request_set_runmode(CRV, 20, adjust);
 }
 
 void Move::stop(){

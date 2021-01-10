@@ -10,7 +10,6 @@
 
 #include <array>
 #include "uss.hpp"
-#include "move.hpp"
 #include "request.h"
 
 /**
@@ -34,7 +33,7 @@ typedef enum{
 class UssMgr{
 public:
     UssMgr();
-    void searchUss(run_state_t *run_state, run_t *next_state, int *run_param);
+    void searchUss(run_state_t *run_state, int *next_state, int *run_param);
 
 private:
     //! 超音波の値を格納する配列

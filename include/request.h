@@ -1,3 +1,10 @@
+/**
+ * @file request.h
+ * @brief Arduinoへのリクエストモジュール
+ * @author 岡部
+ * @date 2020/11/11
+ */
+
 #ifndef __REQUEST__
 #define __REQUEST__
 

@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <unistd.h>
+#include "arduino.h"
 #include "hand.hpp"
 #include "spray.hpp"
 
@@ -8,6 +9,7 @@ int main(){
     Spray spray;
     const int actuate_count = 20;
     int count = 0;
+    if(arduino_open() != 0) return -1;
 
     while(true){
         count++;

@@ -13,9 +13,7 @@
 Spray::Spray():
 spray_morter(360),
 gear_rate(1.0f)
-{
-    return;
-}
+{}
 
 void Spray::pushBottle(){
     request_set_spray();

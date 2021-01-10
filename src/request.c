@@ -1,8 +1,8 @@
+#include "request.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "arduino.h"
-#include "request.h"
 
 void request_set_runmode(run_state_t state, int speed, int dist){
 	command_data_t command_data;

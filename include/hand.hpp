@@ -37,7 +37,7 @@ private:
     bool changed_flag;
 
     //! 配列のサイズ
-    static const size_t array_size = 5;
+    static const size_t array_size = 10;
     //! 焦電センサの値を格納する配列
     std::array<bool, array_size> pyro_array;
 };

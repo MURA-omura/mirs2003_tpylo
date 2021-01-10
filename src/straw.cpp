@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 Straw::Straw():
-actuate_count(20),
+actuate_count(30),
 count(0)
 {}
 

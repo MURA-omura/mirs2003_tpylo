@@ -5,15 +5,15 @@ DIR_OBJ  := ./build
 
 # 生成するプログラム
 PRGS := tpylo
-# PRGS += test_io test_uss test_request test_direction test_position
+PRGS += test_follow test_io test_move test_straw test_uss
 
 # オブジェクト
-OBJS_RUN := $(addprefix $(DIR_OBJ)/, tpylo.o test_io.o test_straw.o test_uss.o)
+OBJS_RUN := $(addprefix $(DIR_OBJ)/, tpylo.o test_follow.o test_io.o test_move.o test_straw.o test_uss.o)
 OBJS_UPS := $(addprefix $(DIR_OBJ)/, move.o straw.o ussmgr.o)
-OBJS_STR := $(addprefix $(DIR_OBJ)/, hand.o spray.o)
+OBJS_STR := $(addprefix $(DIR_OBJ)/, arduino.o hand.o request.o spray.o)
 OBJS_USS := $(addprefix $(DIR_OBJ)/, uss.o)
-OBJS_UTL := $(addprefix $(DIR_OBJ)/, io.o)
-OBJS_ETC := $(addprefix $(DIR_OBJ)/, alternate.o arcohol.o arduino.o request.o sock.o)
+OBJS_UTL := $(addprefix $(DIR_OBJ)/, alternate.o io.o)
+OBJS_ETC := $(addprefix $(DIR_OBJ)/, arcohol.o sock.o)
 
 # コンパイルオプション
 CC      := g++
@@ -46,13 +46,19 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.cpp
 tpylo: $(OBJS_UPS) $(OBJS_STR) $(OBJS_USS) $(OBJS_UTL) $(OBJS_ETC) $(DIR_OBJ)/tpylo.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
+test_follow: $(OBJS_UPS) $(OBJS_STR) $(OBJS_USS) $(OBJS_UTL) $(OBJS_ETC) $(DIR_OBJ)/test_follow.o
+	$(CC) $(LDFLAGS) $^ -o $@
+
 test_io: $(OBJS_UTL) $(DIR_OBJ)/test_io.o
+	$(CC) $(LDFLAGS) $^ -o $@
+
+test_move: $(OBJS_UPS) $(OBJS_STR) $(OBJS_USS) $(OBJS_UTL) $(OBJS_ETC) $(DIR_OBJ)/test_move.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
 test_request: $(DIR_OBJ)/test_request.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-test_straw: $(OBJS_STR) $(OBJS_UTL) $(DIR_OBJ)/test_uss.o
+test_straw: $(OBJS_STR) $(OBJS_UTL) $(DIR_OBJ)/test_straw.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
 test_uss: $(OBJS_USS) $(DIR_OBJ)/test_uss.o

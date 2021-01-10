@@ -12,6 +12,7 @@
 #include "alternate.hpp"
 #include "io.hpp"
 #include "request.h"
+#include "ussmgr.hpp"
 
 /**
  * @brief 走行状態
@@ -43,10 +44,12 @@ public:
     /**
      * @brief 走行状態取得関数
      */
-    void resume() { next_state = STRAIGHT; }
+    void resume();
 
 
 private:
+    //! 超音波センサ
+    UssMgr ussMgr;
     //! 起動用スイッチ
     Alternate sw_pw;
     //! タッチセンサ左
@@ -60,13 +63,8 @@ private:
     run_state_t run_state;
     // 走行用パラメータ
     int run_param;
+    int uss_count;
 
-    /**
-     * @brief 状態をセットする関数
-     * @details 超音波の値を読み取り、その値によって状態を変化させる
-     * @return 走行状態
-     */
-    void setState();
     /**
      * @brief 直進状態の関数(通常状態)
      * @details 直進する関数をmove.cppに渡す
